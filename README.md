@@ -1,2 +1,7 @@
-# mycelium
-Personal simulation project
+# Project Mycelium
+
+IMPROVISE.
+
+ADAPT.
+
+OVERCOME.

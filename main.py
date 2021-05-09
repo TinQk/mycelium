@@ -7,6 +7,10 @@ import numpy as np
 import numpy.random as rd
 import matplotlib.pyplot as plt
 import time
+import matplotlib.cm as cm
+import os
+
+print(os.getcwd())
 
 import os
 import sys
@@ -33,6 +37,8 @@ OBSTACLES = [[0, 0], [1,0], [1,1], [2,0], [0,2]]
 
 STEPS_NUMBER=100
 
+WALLS_VALUE = -100
+
 
 
 
@@ -46,13 +52,16 @@ def main():
     m.add_obstacles(OBSTACLES)
     
     map = m.grid
+
+
     
 
     # Cells creation
     all_cells = [ [2,2] ,  [3,3], [7,6], [7,6], [9,9] ]
     
     def accessible(x,y) :        
-        return not (x<0 or y<0 or x >= MAP_LENGTH or y>=MAP_WIDTH or map[x,y] == -1)
+        return not (x<0 or y<0 or x >= MAP_LENGTH or y>=MAP_WIDTH or map[x,y] == WALLS_VALUE)
+
         
     for i in range(STEPS_NUMBER):
             
@@ -85,17 +94,24 @@ def main():
                         b = True
                     
             cell_map[cell[0],cell[1]] += 100
-            
-            print("theta = ", theta)
-        
+          
+          
+          
         
         ## Display   
+                    
+        fig, ax = plt.subplots()
+        # ax.imshow(map + cell_map, interpolation='bilinear', cmap=cm.Greys_r)
+        ax.imshow(map + cell_map, interpolation='nearest', cmap=cm.Greys_r)
+        fig.savefig("{:04d}".format(i))
+        fig.clear()
         
-        print(all_cells)
-        print(map + cell_map)
+        
+        # print(all_cells)
+        # print(map + cell_map)
             
-        input("")
-        print ("\n" * 100) 
+        # input("")
+        # print ("\n" * 100) 
  
    
     ## End

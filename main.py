@@ -28,7 +28,13 @@ import params
 
 
 def main():
+    
+    ## Init
     start_time = time.time()
+    
+    sim_folder_path = "sim\\" + time.strftime("%y%m%d %Hh%Mm%Ss", time.gmtime())
+    if params.SAVE_SIM:
+        os.mkdir(sim_folder_path)
     
     ## Run
     
@@ -98,7 +104,7 @@ def main():
             fig, ax = plt.subplots()
             # ax.imshow(map + cell_map, interpolation='bilinear', cmap=cm.Greys_r)
             ax.imshow(map + cell_map, interpolation='nearest', cmap=cm.Greys_r)
-            fig.savefig("{:04d}".format(i))
+            fig.savefig(sim_folder_path + "\\{:04d}".format(i))
             fig.clear()
         
         

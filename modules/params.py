@@ -1,4 +1,4 @@
-SAVE_SIM = False
+SAVE_SIM = True
 
 MAP_LENGTH = 10
 MAP_WIDTH = 10

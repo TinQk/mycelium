@@ -1,18 +1,39 @@
 #! /usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+## Built in modules
 
 import numpy as np
 import numpy.random as rd
 import matplotlib.pyplot as plt
 import time
 
+import os
+import sys
+
+
+
+## Project modules
+
+main_dir_path = os.getcwd()
+modules_path = main_dir_path + "\\modules"
+
+# On ajoute le dossier modules aux dossiers de recherche des modules
+if modules_path not in sys.path:
+    sys.path.append(modules_path)
+
+import map_modules
+
+
 ## Constants
 
-map_LENGTH = 10
-map_WIDTH = 10
+MAP_LENGTH = 10
+MAP_WIDTH = 10
+OBSTACLES = [[0, 0], [1,0], [1,1], [2,0], [0,2]]
 
 STEPS_NUMBER=100
+
+
 
 
 def main():
@@ -21,25 +42,21 @@ def main():
     ## Run
     
     # Map creation
-    map = np.zeros((map_LENGTH, map_WIDTH))
+    m = map_modules.map(MAP_LENGTH, MAP_WIDTH)
+    m.add_obstacles(OBSTACLES)
     
-    # Obstacles
-    map[0,0] = -1
-    map[1,0] = -1
-    map[0,1] = -1
-    map[1,1] = -1
-    map[2,0] = -1
-    map[0,2] = -1
+    map = m.grid
     
+
     # Cells creation
     all_cells = [ [2,2] ,  [3,3], [7,6], [7,6], [9,9] ]
     
     def accessible(x,y) :        
-        return not (x<0 or y<0 or x >= map_LENGTH or y>=map_WIDTH or map[x,y] == -1)
+        return not (x<0 or y<0 or x >= MAP_LENGTH or y>=MAP_WIDTH or map[x,y] == -1)
         
     for i in range(STEPS_NUMBER):
             
-        cell_map = np.zeros((map_LENGTH, map_WIDTH))
+        cell_map = np.zeros((MAP_LENGTH, MAP_WIDTH))
         for cell in all_cells :
             
             b = True

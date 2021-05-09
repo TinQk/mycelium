@@ -8,13 +8,9 @@ import numpy.random as rd
 import matplotlib.pyplot as plt
 import time
 import matplotlib.cm as cm
-import os
-
-print(os.getcwd())
 
 import os
 import sys
-
 
 
 ## Project modules
@@ -27,18 +23,7 @@ if modules_path not in sys.path:
     sys.path.append(modules_path)
 
 import map_modules
-
-
-## Constants
-
-MAP_LENGTH = 10
-MAP_WIDTH = 10
-OBSTACLES = [[0, 0], [1,0], [1,1], [2,0], [0,2]]
-
-STEPS_NUMBER=100
-
-WALLS_VALUE = -100
-
+import params
 
 
 
@@ -48,8 +33,8 @@ def main():
     ## Run
     
     # Map creation
-    m = map_modules.map(MAP_LENGTH, MAP_WIDTH)
-    m.add_obstacles(OBSTACLES)
+    m = map_modules.Map(params.MAP_LENGTH, params.MAP_WIDTH)
+    m.add_obstacles(params.OBSTACLES)
     
     map = m.grid
 
@@ -60,12 +45,12 @@ def main():
     all_cells = [ [2,2] ,  [3,3], [7,6], [7,6], [9,9] ]
     
     def accessible(x,y) :        
-        return not (x<0 or y<0 or x >= MAP_LENGTH or y>=MAP_WIDTH or map[x,y] == WALLS_VALUE)
+        return not (x<0 or y<0 or x >= params.MAP_LENGTH or y>=params.MAP_WIDTH or map[x,y] == params.WALLS_VALUE)
 
         
-    for i in range(STEPS_NUMBER):
+    for i in range(params.STEPS_NUMBER):
             
-        cell_map = np.zeros((MAP_LENGTH, MAP_WIDTH))
+        cell_map = np.zeros((params.MAP_LENGTH, params.MAP_WIDTH))
         for cell in all_cells :
             
             b = True
@@ -98,20 +83,26 @@ def main():
           
           
         
-        ## Display   
-                    
-        fig, ax = plt.subplots()
-        # ax.imshow(map + cell_map, interpolation='bilinear', cmap=cm.Greys_r)
-        ax.imshow(map + cell_map, interpolation='nearest', cmap=cm.Greys_r)
-        fig.savefig("{:04d}".format(i))
-        fig.clear()
+        ## Display
         
-        
-        # print(all_cells)
-        # print(map + cell_map)
+        print(all_cells)
+        print(map + cell_map)
             
-        # input("")
-        # print ("\n" * 100) 
+        input("")
+        print ("\n" * 100) 
+        
+        
+        ## Save sim as images
+        
+        if params.SAVE_SIM:
+            fig, ax = plt.subplots()
+            # ax.imshow(map + cell_map, interpolation='bilinear', cmap=cm.Greys_r)
+            ax.imshow(map + cell_map, interpolation='nearest', cmap=cm.Greys_r)
+            fig.savefig("{:04d}".format(i))
+            fig.clear()
+        
+        
+
  
    
     ## End

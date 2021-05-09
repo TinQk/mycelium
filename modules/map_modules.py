@@ -2,8 +2,10 @@
 # -*- coding: utf-8 -*-
 
 import numpy as np
+import params
 
-class map:
+
+class Map:
     
     def __init__(self, length, width):
         self.length = length
@@ -13,4 +15,4 @@ class map:
     
     def add_obstacles(self, obs_locations):
         for loc in obs_locations:
-            self.grid[loc[0], loc[1]] = -1
+            self.grid[loc[0], loc[1]] = params.WALLS_VALUE
